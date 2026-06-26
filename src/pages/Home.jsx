@@ -331,67 +331,122 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
         </div>
       </section>
 
-      {/* ══════ FOOTER ══════ */}
-      <footer style={{ background: "#0a0a0a", color: "rgba(255,255,255,.65)", paddingTop: 72 }}>
-        <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, paddingBottom: 52, borderBottom: "1px solid rgba(255,255,255,.08)" }} className="footer-grid">
+      {/* ══════ QUICK CONTACT ══════ */}
+      <section style={{ padding: "88px 0", background: "#f9fafb" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="qc-grid">
 
-            <div>
-              <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "1.4rem", fontWeight: 800, color: "#fff", textDecoration: "none", marginBottom: 16 }}>
-                <span>👟</span> SOLE<span style={{ color: "#e63946" }}>.</span>
-              </Link>
-              <p style={{ fontSize: ".9rem", lineHeight: 1.7, maxWidth: 280 }}>Your one-stop destination for premium footwear. Crafted for performance, designed for life.</p>
-              <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
-                {["📸","🐦","📘","🎵"].map(s => (
-                  <a key={s} href="#" style={{ width: 38, height: 38, borderRadius: 8, background: "rgba(255,255,255,.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", textDecoration: "none", transition: "background .2s" }}
-                    onMouseEnter={e => e.currentTarget.style.background = "#e63946"}
-                    onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,.08)"}>
-                    {s}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {[
-              { title: "Shop",    links: [["Running","/shop?cat=running"],["Casual","/shop?cat=casual"],["Hiking","/shop?cat=hiking"],["Basketball","/shop?cat=basketball"],["Formal","/shop?cat=formal"],["Limited Edition","/shop?cat=limited"]] },
-              { title: "Help",    links: [["Size Guide","#"],["Shipping Info","#"],["Returns","#"],["Order Tracking","#"],["Contact Us","/contact"],["FAQ","#"]] },
-              { title: "Company", links: [["About SOLE","/about"],["Careers","#"],["Press Room","#"],["Sustainability","#"],["Gift Cards","#"]] },
-            ].map(col => (
-              <div key={col.title}>
-                <h4 style={{ color: "#fff", fontSize: ".85rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 18 }}>{col.title}</h4>
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 10 }}>
-                  {col.links.map(([label, href]) => (
-                    <li key={label}>
-                      <Link to={href} style={{ fontSize: ".88rem", color: "rgba(255,255,255,.6)", textDecoration: "none", transition: "color .2s" }}
-                        onMouseEnter={e => e.target.style.color = "#fff"}
-                        onMouseLeave={e => e.target.style.color = "rgba(255,255,255,.6)"}>
-                        {label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ padding: "24px 0", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, fontSize: ".82rem", color: "rgba(255,255,255,.35)" }}>
-            <span>© 2025 SOLE Inc. All rights reserved.</span>
-            <div style={{ display: "flex", gap: 20 }}>
-              {["Privacy Policy","Terms of Service","Cookie Policy"].map(l => (
-                <Link key={l} to="#" style={{ color: "rgba(255,255,255,.35)", textDecoration: "none", transition: "color .2s" }}
-                  onMouseEnter={e => e.target.style.color = "rgba(255,255,255,.8)"}
-                  onMouseLeave={e => e.target.style.color = "rgba(255,255,255,.35)"}>
-                  {l}
-                </Link>
+          {/* Left — info */}
+          <FadeUp>
+            <div style={{ display: "inline-block", textTransform: "uppercase", letterSpacing: ".14em", fontSize: ".75rem", fontWeight: 700, color: "#e63946", marginBottom: 14 }}>Contact Us</div>
+            <h2 style={{ fontSize: "clamp(1.6rem,3.5vw,2.4rem)", fontWeight: 900, marginBottom: 16, lineHeight: 1.15 }}>
+              Got a Question?<br /><span style={{ color: "#e63946", fontStyle: "italic" }}>We're Here</span> to Help.
+            </h2>
+            <p style={{ color: "#6b7280", fontSize: "1rem", lineHeight: 1.75, marginBottom: 32, maxWidth: 400 }}>
+              Whether it's about sizing, orders, or just finding the perfect shoe — our team responds within 24 hours.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {[
+                { icon: "✉️", label: "hello@sole.store" },
+                { icon: "📞", label: "+1 (555) 123-4567" },
+                { icon: "⚡", label: "Live chat — avg. reply < 2 min" },
+              ].map(({ icon, label }) => (
+                <div key={label} style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                  <span style={{ width: 40, height: 40, background: "rgba(230,57,70,.1)", borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.1rem", flexShrink: 0 }}>{icon}</span>
+                  <span style={{ fontSize: ".92rem", color: "#374151", fontWeight: 500 }}>{label}</span>
+                </div>
               ))}
             </div>
-          </div>
-        </div>
-      </footer>
+          </FadeUp>
 
-      <style>{`@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr!important}} @media(max-width:560px){.footer-grid{grid-template-columns:1fr!important}}`}</style>
+          {/* Right — form */}
+          <FadeUp delay={120}>
+            <QuickContactForm onToast={(msg) => { setToast({ show: true, msg }); setTimeout(() => setToast({ show: false, msg: "" }), 2800); }} />
+          </FadeUp>
+        </div>
+        <style>{`@media(max-width:860px){.qc-grid{grid-template-columns:1fr!important}}`}</style>
+      </section>
 
       <Toast msg={toast.msg} show={toast.show} />
+    </div>
+  );
+}
+
+function QuickContactForm({ onToast }) {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors] = useState({});
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  function validate() {
+    const e = {};
+    if (!form.name.trim())    e.name    = "Required";
+    if (!form.email.trim())   e.email   = "Required";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Invalid email";
+    if (!form.message.trim()) e.message = "Required";
+    return e;
+  }
+
+  function handleSubmit(ev) {
+    ev.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSent(true);
+      onToast("Message sent! We'll reply within 24 hrs 🎉");
+    }, 1200);
+  }
+
+  const field = (key, type = "text", placeholder = "") => ({
+    value: form[key],
+    onChange: e => { setForm(f => ({ ...f, [key]: e.target.value })); setErrors(er => ({ ...er, [key]: "" })); },
+    onFocus: e => { e.target.style.borderColor = "#e63946"; e.target.style.boxShadow = "0 0 0 3px rgba(230,57,70,.1)"; },
+    onBlur:  e => { e.target.style.borderColor = errors[key] ? "#e63946" : "#d1d5db"; e.target.style.boxShadow = "none"; },
+    type, placeholder,
+    style: { width: "100%", padding: "12px 14px", border: `1.5px solid ${errors[key] ? "#e63946" : "#d1d5db"}`, borderRadius: 10, fontSize: ".92rem", outline: "none", boxSizing: "border-box", transition: "border-color .2s, box-shadow .2s", background: "#fff", color: "#111" },
+  });
+
+  if (sent) return (
+    <div style={{ background: "#fff", borderRadius: 20, border: "1px solid #e5e7eb", padding: "48px 36px", textAlign: "center", boxShadow: "0 4px 20px rgba(0,0,0,.06)" }}>
+      <div style={{ fontSize: "3.5rem", marginBottom: 12 }}>🎉</div>
+      <h3 style={{ fontWeight: 800, fontSize: "1.2rem", marginBottom: 8 }}>Message Sent!</h3>
+      <p style={{ color: "#6b7280", fontSize: ".9rem", marginBottom: 20 }}>We'll get back to you at <strong>{form.email}</strong> within 24 hours.</p>
+      <button onClick={() => { setSent(false); setForm({ name: "", email: "", message: "" }); }}
+        style={{ padding: "10px 24px", background: "#e63946", color: "#fff", border: "none", borderRadius: 100, fontWeight: 700, cursor: "pointer", fontSize: ".9rem" }}>
+        Send Another
+      </button>
+    </div>
+  );
+
+  return (
+    <div style={{ background: "#fff", borderRadius: 20, border: "1px solid #e5e7eb", padding: "36px", boxShadow: "0 4px 20px rgba(0,0,0,.06)" }}>
+      <h3 style={{ fontWeight: 800, fontSize: "1.15rem", marginBottom: 4 }}>Send a Message</h3>
+      <p style={{ color: "#9ca3af", fontSize: ".85rem", marginBottom: 24 }}>We respond within 24 hours.</p>
+      <form onSubmit={handleSubmit} noValidate style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }} className="qc-row">
+          <div>
+            <input {...field("name", "text", "Your name")} />
+            {errors.name && <span style={{ color: "#e63946", fontSize: ".74rem" }}>{errors.name}</span>}
+          </div>
+          <div>
+            <input {...field("email", "email", "Email address")} />
+            {errors.email && <span style={{ color: "#e63946", fontSize: ".74rem" }}>{errors.email}</span>}
+          </div>
+        </div>
+        <div>
+          <textarea {...field("message", "text", "How can we help you?")} rows={4}
+            style={{ ...field("message").style, resize: "vertical", minHeight: 100 }} />
+          {errors.message && <span style={{ color: "#e63946", fontSize: ".74rem" }}>{errors.message}</span>}
+        </div>
+        <button type="submit" disabled={loading}
+          style={{ padding: "13px", background: loading ? "#9ca3af" : "#111", color: "#fff", border: "none", borderRadius: 10, fontWeight: 700, fontSize: ".95rem", cursor: loading ? "default" : "pointer", transition: "background .2s", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+          onMouseEnter={e => { if (!loading) e.currentTarget.style.background = "#e63946"; }}
+          onMouseLeave={e => { if (!loading) e.currentTarget.style.background = "#111"; }}>
+          {loading ? "Sending..." : "Send Message ✈️"}
+        </button>
+      </form>
+      <style>{`@media(max-width:480px){.qc-row{grid-template-columns:1fr!important}}`}</style>
     </div>
   );
 }

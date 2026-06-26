@@ -6,13 +6,15 @@ import ProductCard from "../components/ProductCard";
 export default function Shop({ onAddToCart }) {
   const [searchParams] = useSearchParams();
   const urlCat = searchParams.get("cat");
+  const urlQ   = searchParams.get("q") || "";
 
   const [selectedCats, setSelectedCats] = useState(urlCat ? [urlCat] : []);
   const [maxPrice, setMaxPrice] = useState(350);
   const [onlySale, setOnlySale] = useState(false);
   const [sort, setSort] = useState("default");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(urlQ);
   const [toast, setToast] = useState({ show: false, msg: "" });
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   function toggleCat(id) {
     setSelectedCats((prev) =>
@@ -67,8 +69,20 @@ export default function Shop({ onAddToCart }) {
 
       <div style={{ maxWidth: 1260, margin: "0 auto", padding: "48px 24px", display: "grid", gridTemplateColumns: "250px 1fr", gap: 32, alignItems: "start" }} className="shop-wrap">
 
+        {/* Mobile filter toggle */}
+        <button className="filter-toggle-btn" onClick={() => setFiltersOpen(o => !o)}
+          style={{ display: "none", alignItems: "center", gap: 8, padding: "11px 20px", background: "#111", color: "#fff", border: "none", borderRadius: 10, fontWeight: 600, fontSize: ".9rem", cursor: "pointer", marginBottom: 8, width: "100%" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          {filtersOpen ? "Hide Filters" : "Show Filters"}
+          {(selectedCats.length > 0 || onlySale || maxPrice < 350) && (
+            <span style={{ marginLeft: "auto", background: "#e63946", color: "#fff", borderRadius: 100, padding: "1px 8px", fontSize: ".72rem" }}>
+              {selectedCats.length + (onlySale ? 1 : 0) + (maxPrice < 350 ? 1 : 0)}
+            </span>
+          )}
+        </button>
+
         {/* ── Sidebar ── */}
-        <aside style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 16, padding: 24, position: "sticky", top: 96 }}>
+        <aside className={`shop-sidebar ${filtersOpen ? "sidebar-open" : ""}`} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 16, padding: 24, position: "sticky", top: 96 }}>
 
           {/* Search */}
           <div style={{ marginBottom: 24 }}>
@@ -163,7 +177,12 @@ export default function Shop({ onAddToCart }) {
       </div>
 
       <style>{`
-        @media(max-width:900px){ .shop-wrap{grid-template-columns:1fr!important} }
+        @media(max-width:900px){
+          .shop-wrap{ grid-template-columns:1fr!important }
+          .filter-toggle-btn{ display:flex!important }
+          .shop-sidebar{ display:none!important }
+          .shop-sidebar.sidebar-open{ display:block!important }
+        }
         @media(max-width:700px){ .prod-grid-shop{grid-template-columns:repeat(2,1fr)!important} }
         @media(max-width:460px){ .prod-grid-shop{grid-template-columns:1fr!important} }
       `}</style>
