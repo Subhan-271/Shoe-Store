@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import ShoeIllustration from "./ShoeIllustration";
 
 function Stars({ rating }) {
   return (
@@ -11,6 +13,8 @@ function Stars({ rating }) {
 }
 
 export default function ProductCard({ product, onAddToCart, index = 0 }) {
+  const [imgError, setImgError] = useState(false);
+
   const discount = product.originalPrice > product.price
     ? Math.round((1 - product.price / product.originalPrice) * 100)
     : 0;
@@ -23,22 +27,22 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
     "Limited":     "#0f172a",
   };
 
+  /* Show real image if available, else SVG illustration */
+  const hasRealImage = product.image && !imgError;
+
   return (
-    <article style={{
-      background: "#fff",
-      borderRadius: 20,
-      border: "1px solid #e5e7eb",
-      overflow: "hidden",
-      display: "flex",
-      flexDirection: "column",
-      boxShadow: "0 1px 3px rgba(0,0,0,.06)",
-      transition: "transform .28s ease, box-shadow .28s ease",
-      animationDelay: `${index * 80}ms`,
-    }}
+    <article
+      style={{
+        background: "#fff", borderRadius: 20,
+        border: "1px solid #e5e7eb", overflow: "hidden",
+        display: "flex", flexDirection: "column",
+        boxShadow: "0 1px 3px rgba(0,0,0,.06)",
+        transition: "transform .28s ease, box-shadow .28s ease",
+      }}
       onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-8px)"; e.currentTarget.style.boxShadow = "0 20px 48px rgba(0,0,0,.15)"; }}
       onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,.06)"; }}
     >
-      {/* Image area */}
+      {/* ── Image area ── */}
       <Link to={`/product/${product.id}`} style={{ display: "block", textDecoration: "none" }}>
         <div style={{
           position: "relative", height: 220,
@@ -46,46 +50,82 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
           display: "flex", alignItems: "center", justifyContent: "center",
           overflow: "hidden",
         }}>
-          <span style={{ fontSize: "5.5rem", transform: "rotate(-15deg)", filter: "drop-shadow(4px 8px 16px rgba(0,0,0,.3))", transition: "transform .4s cubic-bezier(.34,1.56,.64,1)" }}
-            onMouseEnter={e => e.target.style.transform = "rotate(-5deg) scale(1.1) translateY(-6px)"}
-            onMouseLeave={e => e.target.style.transform = "rotate(-15deg)"}
-          >
-            {product.emoji}
-          </span>
+          {hasRealImage ? (
+            /* Real photo */
+            <img
+              src={product.image}
+              alt={product.name}
+              onError={() => setImgError(true)}
+              style={{
+                width: "100%", height: "100%",
+                objectFit: "cover",
+                transition: "transform .4s ease",
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = "scale(1.06)"}
+              onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+            />
+          ) : (
+            /* SVG Illustration fallback */
+            <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "16px 20px 8px" }}>
+              <ShoeIllustration
+                shoeType={product.shoeType || "sneaker"}
+                colors={product.shoeColors || []}
+              />
+            </div>
+          )}
+
+          {/* Badge */}
           {product.badge && (
-            <span style={{ position: "absolute", top: 14, left: 14, padding: "4px 12px", borderRadius: 100, fontSize: ".72rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".04em", background: badgeColors[product.badge] || "#111", color: product.badge === "Limited" ? "#c4b5fd" : "#fff" }}>
+            <span style={{
+              position: "absolute", top: 12, left: 12,
+              padding: "4px 12px", borderRadius: 100,
+              fontSize: ".72rem", fontWeight: 700,
+              textTransform: "uppercase", letterSpacing: ".04em",
+              background: badgeColors[product.badge] || "#111",
+              color: product.badge === "Limited" ? "#c4b5fd" : "#fff",
+              zIndex: 2,
+            }}>
               {product.badge}
             </span>
           )}
+
+          {/* Discount chip */}
           {discount > 0 && (
-            <span style={{ position: "absolute", top: 14, right: 14, background: "#10b981", color: "#fff", padding: "4px 10px", borderRadius: 100, fontSize: ".72rem", fontWeight: 700 }}>
+            <span style={{
+              position: "absolute", top: 12, right: 12,
+              background: "#10b981", color: "#fff",
+              padding: "4px 10px", borderRadius: 100,
+              fontSize: ".72rem", fontWeight: 700, zIndex: 2,
+            }}>
               -{discount}%
             </span>
           )}
         </div>
       </Link>
 
-      {/* Info */}
-      <Link to={`/product/${product.id}`} style={{ padding: "18px 18px 12px", display: "flex", flexDirection: "column", gap: 6, flex: 1, textDecoration: "none", color: "inherit" }}>
-        <p style={{ fontSize: ".75rem", color: "#e63946", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", margin: 0 }}>
+      {/* ── Info ── */}
+      <Link to={`/product/${product.id}`} style={{ padding: "16px 16px 10px", display: "flex", flexDirection: "column", gap: 5, flex: 1, textDecoration: "none", color: "inherit" }}>
+        <p style={{ fontSize: ".72rem", color: "#e63946", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", margin: 0 }}>
           {product.category}
         </p>
-        <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#111", lineHeight: 1.3, margin: 0 }}>
+        <h3 style={{ fontSize: ".98rem", fontWeight: 700, color: "#111", lineHeight: 1.3, margin: 0 }}>
           {product.name}
         </h3>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Stars rating={product.rating} />
-          <span style={{ fontSize: ".78rem", color: "#9ca3af" }}>({product.reviews})</span>
+          <span style={{ fontSize: ".75rem", color: "#9ca3af" }}>({product.reviews})</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 4 }}>
-          <span style={{ fontSize: "1.15rem", fontWeight: 800, color: "#111" }}>${product.price.toFixed(2)}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 2 }}>
+          <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#111" }}>${product.price.toFixed(2)}</span>
           {product.originalPrice > product.price && (
-            <span style={{ fontSize: ".88rem", color: "#9ca3af", textDecoration: "line-through" }}>${product.originalPrice.toFixed(2)}</span>
+            <span style={{ fontSize: ".85rem", color: "#9ca3af", textDecoration: "line-through" }}>
+              ${product.originalPrice.toFixed(2)}
+            </span>
           )}
         </div>
       </Link>
 
-      {/* Add to cart */}
+      {/* ── Add to cart ── */}
       <button
         onClick={() => onAddToCart && onAddToCart(product)}
         style={{
@@ -96,8 +136,8 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
           display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
           transition: "background .2s",
         }}
-        onMouseEnter={e => e.target.style.background = "#e63946"}
-        onMouseLeave={e => e.target.style.background = "#111"}
+        onMouseEnter={e => e.currentTarget.style.background = "#e63946"}
+        onMouseLeave={e => e.currentTarget.style.background = "#111"}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
+import ShoeIllustration from "../components/ShoeIllustration";
 
 function Stars({ rating }) {
   return (
@@ -17,6 +18,7 @@ export default function ProductDetail({ onAddToCart }) {
   const { id } = useParams();
   const product = products.find((p) => p.id === Number(id));
 
+  const [imgError, setImgError] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(0);
   const [qty, setQty] = useState(1);
@@ -78,19 +80,27 @@ export default function ProductDetail({ onAddToCart }) {
           {/* Left — Product Image */}
           <div>
             <div style={{ borderRadius: 24, overflow: "hidden", height: 460, background: product.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
-              <span style={{ fontSize: "11rem", transform: "rotate(-15deg)", filter: "drop-shadow(0 20px 40px rgba(0,0,0,.25))", transition: "transform .4s ease" }}
-                onMouseEnter={e => e.target.style.transform = "rotate(-5deg) scale(1.05)"}
-                onMouseLeave={e => e.target.style.transform = "rotate(-15deg)"}>
-                {product.emoji}
-              </span>
+              {product.image && !imgError ? (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  onError={() => setImgError(true)}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
+                <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", padding: "32px 40px 20px" }}>
+                  <ShoeIllustration shoeType={product.shoeType || "sneaker"} colors={product.shoeColors || []} />
+                </div>
+              )}
             </div>
             {/* Thumbnail row */}
             <div style={{ display: "flex", gap: 12 }}>
               {[0, 1, 2].map((i) => (
-                <div key={i} style={{ width: 80, height: 80, borderRadius: 12, background: product.bg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2rem", border: i === 0 ? "2px solid #e63946" : "2px solid #e5e7eb", cursor: "pointer", opacity: i === 0 ? 1 : 0.65, transition: "all .2s" }}
+                <div key={i}
+                  style={{ width: 80, height: 80, borderRadius: 12, background: product.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: 6, border: i === 0 ? "2px solid #e63946" : "2px solid #e5e7eb", cursor: "pointer", opacity: i === 0 ? 1 : 0.65, transition: "all .2s", overflow: "hidden" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "#e63946"; e.currentTarget.style.opacity = "1"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = i === 0 ? "#e63946" : "#e5e7eb"; e.currentTarget.style.opacity = i === 0 ? "1" : "0.65"; }}>
-                  {product.emoji}
+                  <ShoeIllustration shoeType={product.shoeType || "sneaker"} colors={product.shoeColors || []} />
                 </div>
               ))}
             </div>
