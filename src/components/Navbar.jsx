@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar({ cartCount = 0 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -10,49 +12,63 @@ export default function Navbar({ cartCount = 0 }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // close mobile menu on route change
+  useEffect(() => setMenuOpen(false), [location.pathname]);
+
   const links = [
-    { label: "Home",    href: "/" },
-    { label: "Shop",    href: "/shop" },
-    { label: "About",   href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Home",    to: "/" },
+    { label: "Shop",    to: "/shop" },
+    { label: "About",   to: "/about" },
+    { label: "Contact", to: "/contact" },
   ];
+
+  const isActive = (to) =>
+    to === "/" ? location.pathname === "/" : location.pathname.startsWith(to);
+
+  const linkStyle = (to) => ({
+    color: isActive(to) ? "#e63946" : "rgba(255,255,255,.75)",
+    background: isActive(to) ? "rgba(230,57,70,.12)" : "transparent",
+    padding: "8px 14px",
+    borderRadius: 6,
+    fontSize: ".92rem",
+    fontWeight: 500,
+    textDecoration: "none",
+    transition: "all .2s",
+    display: "block",
+  });
 
   return (
     <>
-      <nav
-        style={{
-          position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-          height: 72, background: "#111",
-          boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,.4)" : "none",
-          transition: "box-shadow .3s",
-        }}
-      >
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
+        height: 72, background: "#111",
+        boxShadow: scrolled ? "0 4px 20px rgba(0,0,0,.4)" : "none",
+        transition: "box-shadow .3s",
+      }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px", height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
           {/* Logo */}
-          <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "1.5rem", fontWeight: 800, color: "#fff", textDecoration: "none", letterSpacing: "-.02em" }}>
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "1.5rem", fontWeight: 800, color: "#fff", textDecoration: "none", letterSpacing: "-.02em" }}>
             <span style={{ fontSize: "1.6rem" }}>👟</span>
             SOLE<span style={{ color: "#e63946" }}>.</span>
-          </a>
+          </Link>
 
           {/* Desktop Links */}
-          <ul style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }} className="desktop-nav">
+          <ul className="desktop-nav" style={{ display: "flex", gap: 4, listStyle: "none", margin: 0, padding: 0 }}>
             {links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} style={{ color: "rgba(255,255,255,.75)", padding: "8px 14px", borderRadius: 6, fontSize: ".92rem", fontWeight: 500, textDecoration: "none", transition: "all .2s", display: "block" }}
-                  onMouseEnter={e => { e.target.style.color = "#fff"; e.target.style.background = "rgba(255,255,255,.1)"; }}
-                  onMouseLeave={e => { e.target.style.color = "rgba(255,255,255,.75)"; e.target.style.background = "transparent"; }}>
+                <Link to={l.to} style={linkStyle(l.to)}
+                  onMouseEnter={e => { if (!isActive(l.to)) { e.target.style.color = "#fff"; e.target.style.background = "rgba(255,255,255,.1)"; } }}
+                  onMouseLeave={e => { e.target.style.color = isActive(l.to) ? "#e63946" : "rgba(255,255,255,.75)"; e.target.style.background = isActive(l.to) ? "rgba(230,57,70,.12)" : "transparent"; }}>
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
           {/* Actions */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <a href="/cart" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 42, height: 42, borderRadius: 8, color: "rgba(255,255,255,.8)", textDecoration: "none", transition: "background .2s" }}
-              onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,.1)"}
-              onMouseLeave={e => e.currentTarget.style.background = "transparent"}>
+            <Link to="/cart" style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", width: 42, height: 42, borderRadius: 8, color: "rgba(255,255,255,.8)", textDecoration: "none" }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
@@ -62,23 +78,16 @@ export default function Navbar({ cartCount = 0 }) {
                   {cartCount}
                 </span>
               )}
-            </a>
+            </Link>
 
             {/* Hamburger */}
-            <button
+            <button className="hamburger-btn"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Menu"
-              style={{ display: "none", flexDirection: "column", gap: 5, width: 42, height: 42, alignItems: "center", justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", borderRadius: 6 }}
-              className="hamburger-btn">
+              style={{ flexDirection: "column", gap: 5, width: 42, height: 42, alignItems: "center", justifyContent: "center", background: "transparent", border: "none", cursor: "pointer", borderRadius: 6, padding: 0 }}>
               {[0, 1, 2].map((i) => (
                 <span key={i} style={{
-                  display: "block", width: 22, height: 2, background: "#fff", borderRadius: 2,
-                  transition: "all .3s",
-                  transform: menuOpen
-                    ? i === 0 ? "translateY(7px) rotate(45deg)"
-                    : i === 1 ? "scaleX(0)"
-                    : "translateY(-7px) rotate(-45deg)"
-                    : "none",
+                  display: "block", width: 22, height: 2, background: "#fff", borderRadius: 2, transition: "all .3s",
+                  transform: menuOpen ? (i === 0 ? "translateY(7px) rotate(45deg)" : i === 1 ? "scaleX(0)" : "translateY(-7px) rotate(-45deg)") : "none",
                   opacity: menuOpen && i === 1 ? 0 : 1,
                 }} />
               ))}
@@ -89,23 +98,19 @@ export default function Navbar({ cartCount = 0 }) {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div style={{
-          position: "fixed", top: 72, left: 0, right: 0, zIndex: 999,
-          background: "#0a0a0a", padding: 20,
-          borderTop: "1px solid rgba(255,255,255,.08)",
-        }}>
-          <ul style={{ listStyle: "none", margin: "0 0 20px", padding: 0, display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ position: "fixed", top: 72, left: 0, right: 0, zIndex: 999, background: "#0a0a0a", padding: 20, borderTop: "1px solid rgba(255,255,255,.08)" }}>
+          <ul style={{ listStyle: "none", margin: "0 0 16px", padding: 0, display: "flex", flexDirection: "column", gap: 4 }}>
             {links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} style={{ display: "block", color: "rgba(255,255,255,.8)", padding: "12px 16px", borderRadius: 10, fontWeight: 500, textDecoration: "none" }}>
+                <Link to={l.to} style={{ display: "block", color: isActive(l.to) ? "#e63946" : "rgba(255,255,255,.8)", padding: "12px 16px", borderRadius: 10, fontWeight: 500, textDecoration: "none" }}>
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-          <a href="/cart" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", background: "#e63946", color: "#fff", borderRadius: 10, fontWeight: 600, textDecoration: "none" }}>
-            🛒 View Cart
-          </a>
+          <Link to="/cart" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", background: "#e63946", color: "#fff", borderRadius: 10, fontWeight: 600, textDecoration: "none" }}>
+            🛒 View Cart {cartCount > 0 && `(${cartCount})`}
+          </Link>
         </div>
       )}
     </>

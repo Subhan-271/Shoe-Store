@@ -1,21 +1,39 @@
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 
 function App() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState([]);
 
-  function handleAddToCart() {
-    setCartCount((n) => n + 1);
+  function handleAddToCart(product, size, color) {
+    setCart((prev) => {
+      const key = `${product.id}-${size}-${color}`;
+      const existing = prev.find((i) => i.key === key);
+      if (existing) return prev.map((i) => i.key === key ? { ...i, qty: i.qty + 1 } : i);
+      return [...prev, { key, ...product, size, color, qty: 1 }];
+    });
   }
 
+  const cartCount = cart.reduce((s, i) => s + i.qty, 0);
+
   return (
-    <>
+    <BrowserRouter>
       <Navbar cartCount={cartCount} />
       <div style={{ paddingTop: 72 }}>
-        <Home onAddToCart={handleAddToCart} cartCount={cartCount} />
+        <Routes>
+          <Route path="/"           element={<Home onAddToCart={handleAddToCart} />} />
+          <Route path="/shop"       element={<Shop onAddToCart={handleAddToCart} />} />
+          <Route path="/product/:id" element={<ProductDetail onAddToCart={handleAddToCart} />} />
+          <Route path="/about"      element={<About />} />
+          <Route path="/contact"    element={<Contact />} />
+        </Routes>
       </div>
-    </>
+    </BrowserRouter>
   );
 }
 

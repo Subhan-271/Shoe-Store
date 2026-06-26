@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Stars({ rating }) {
   return (
     <span style={{ display: "flex", gap: 2 }}>
@@ -37,7 +39,7 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
       onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 1px 3px rgba(0,0,0,.06)"; }}
     >
       {/* Image area */}
-      <a href={`/product/${product.id}`} style={{ display: "block", textDecoration: "none" }}>
+      <Link to={`/product/${product.id}`} style={{ display: "block", textDecoration: "none" }}>
         <div style={{
           position: "relative", height: 220,
           background: product.bg,
@@ -61,10 +63,10 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
             </span>
           )}
         </div>
-      </a>
+      </Link>
 
       {/* Info */}
-      <a href={`/product/${product.id}`} style={{ padding: "18px 18px 12px", display: "flex", flexDirection: "column", gap: 6, flex: 1, textDecoration: "none", color: "inherit" }}>
+      <Link to={`/product/${product.id}`} style={{ padding: "18px 18px 12px", display: "flex", flexDirection: "column", gap: 6, flex: 1, textDecoration: "none", color: "inherit" }}>
         <p style={{ fontSize: ".75rem", color: "#e63946", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", margin: 0 }}>
           {product.category}
         </p>
@@ -81,7 +83,7 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
             <span style={{ fontSize: ".88rem", color: "#9ca3af", textDecoration: "line-through" }}>${product.originalPrice.toFixed(2)}</span>
           )}
         </div>
-      </a>
+      </Link>
 
       {/* Add to cart */}
       <button

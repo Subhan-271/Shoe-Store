@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { products, categories, testimonials } from "../data/products";
 import ProductCard from "../components/ProductCard";
 
@@ -122,16 +123,16 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
             </p>
 
             <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginBottom: 52 }}>
-              <a href="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 32px", background: "#e63946", color: "#fff", borderRadius: 100, fontWeight: 700, fontSize: "1rem", textDecoration: "none", transition: "all .25s", boxShadow: "0 8px 24px rgba(230,57,70,.4)" }}
+              <Link to="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 32px", background: "#e63946", color: "#fff", borderRadius: 100, fontWeight: 700, fontSize: "1rem", textDecoration: "none", transition: "all .25s", boxShadow: "0 8px 24px rgba(230,57,70,.4)" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "#b91c2c"; e.currentTarget.style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "#e63946"; e.currentTarget.style.transform = "translateY(0)"; }}>
                 Shop Now →
-              </a>
-              <a href="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 32px", border: "2px solid rgba(255,255,255,.3)", color: "#fff", borderRadius: 100, fontWeight: 600, fontSize: "1rem", textDecoration: "none", transition: "all .25s" }}
+              </Link>
+              <Link to="/about" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "15px 32px", border: "2px solid rgba(255,255,255,.3)", color: "#fff", borderRadius: 100, fontWeight: 600, fontSize: "1rem", textDecoration: "none", transition: "all .25s" }}
                 onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,.1)"; e.currentTarget.style.borderColor = "rgba(255,255,255,.6)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,.3)"; }}>
                 Our Story
-              </a>
+              </Link>
             </div>
 
             {/* Stats */}
@@ -204,13 +205,13 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 16 }} className="cats-grid">
             {categories.map((c, i) => (
               <FadeUp key={c.id} delay={i * 60}>
-                <a href={`/shop?cat=${c.id}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "28px 12px", background: "#fff", border: "2px solid #e5e7eb", borderRadius: 20, textAlign: "center", textDecoration: "none", transition: "all .28s", cursor: "pointer" }}
+                <Link to={`/shop?cat=${c.id}`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10, padding: "28px 12px", background: "#fff", border: "2px solid #e5e7eb", borderRadius: 20, textAlign: "center", textDecoration: "none", transition: "all .28s", cursor: "pointer" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = "#e63946"; e.currentTarget.style.transform = "translateY(-6px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.1)"; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}>
                   <span style={{ fontSize: "2.4rem" }}>{c.emoji}</span>
                   <span style={{ fontSize: ".9rem", fontWeight: 700, color: "#374151" }}>{c.name}</span>
                   <span style={{ fontSize: ".75rem", color: "#9ca3af" }}>{c.count} styles</span>
-                </a>
+                </Link>
               </FadeUp>
             ))}
           </div>
@@ -237,11 +238,11 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
           <style>{`@media(max-width:1100px){.prod-grid{grid-template-columns:repeat(3,1fr)!important}} @media(max-width:780px){.prod-grid{grid-template-columns:repeat(2,1fr)!important}} @media(max-width:480px){.prod-grid{grid-template-columns:1fr!important}}`}</style>
 
           <FadeUp style={{ textAlign: "center", marginTop: 44 }}>
-            <a href="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 32px", border: "2px solid #111", color: "#111", borderRadius: 100, fontWeight: 700, fontSize: "1rem", textDecoration: "none", transition: "all .25s" }}
+            <Link to="/shop" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 32px", border: "2px solid #111", color: "#111", borderRadius: 100, fontWeight: 700, fontSize: "1rem", textDecoration: "none", transition: "all .25s" }}
               onMouseEnter={e => { e.currentTarget.style.background = "#111"; e.currentTarget.style.color = "#fff"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#111"; }}>
               View All Products →
-            </a>
+            </Link>
           </FadeUp>
         </div>
       </section>
@@ -336,9 +337,9 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
           <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, paddingBottom: 52, borderBottom: "1px solid rgba(255,255,255,.08)" }} className="footer-grid">
 
             <div>
-              <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "1.4rem", fontWeight: 800, color: "#fff", textDecoration: "none", marginBottom: 16 }}>
+              <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "1.4rem", fontWeight: 800, color: "#fff", textDecoration: "none", marginBottom: 16 }}>
                 <span>👟</span> SOLE<span style={{ color: "#e63946" }}>.</span>
-              </a>
+              </Link>
               <p style={{ fontSize: ".9rem", lineHeight: 1.7, maxWidth: 280 }}>Your one-stop destination for premium footwear. Crafted for performance, designed for life.</p>
               <div style={{ display: "flex", gap: 10, marginTop: 24 }}>
                 {["📸","🐦","📘","🎵"].map(s => (
@@ -361,11 +362,11 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
                 <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 10 }}>
                   {col.links.map(([label, href]) => (
                     <li key={label}>
-                      <a href={href} style={{ fontSize: ".88rem", color: "rgba(255,255,255,.6)", textDecoration: "none", transition: "color .2s" }}
+                      <Link to={href} style={{ fontSize: ".88rem", color: "rgba(255,255,255,.6)", textDecoration: "none", transition: "color .2s" }}
                         onMouseEnter={e => e.target.style.color = "#fff"}
                         onMouseLeave={e => e.target.style.color = "rgba(255,255,255,.6)"}>
                         {label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -377,11 +378,11 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
             <span>© 2025 SOLE Inc. All rights reserved.</span>
             <div style={{ display: "flex", gap: 20 }}>
               {["Privacy Policy","Terms of Service","Cookie Policy"].map(l => (
-                <a key={l} href="#" style={{ color: "rgba(255,255,255,.35)", textDecoration: "none", transition: "color .2s" }}
+                <Link key={l} to="#" style={{ color: "rgba(255,255,255,.35)", textDecoration: "none", transition: "color .2s" }}
                   onMouseEnter={e => e.target.style.color = "rgba(255,255,255,.8)"}
                   onMouseLeave={e => e.target.style.color = "rgba(255,255,255,.35)"}>
                   {l}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
