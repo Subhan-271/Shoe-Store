@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import ShoeIllustration from "../components/ShoeIllustration";
+import { useTheme } from "../context/ThemeContext";
+import { useWishlist } from "../context/WishlistContext";
 
 function Stars({ rating }) {
   return (
@@ -15,16 +17,23 @@ function Stars({ rating }) {
 }
 
 export default function ProductDetail({ onAddToCart }) {
+  const { bg, bg2, card, text, textMuted, border, inputBg, isDark } = useTheme();
+  const { toggle: toggleWish, isWishlisted } = useWishlist();
   const { id } = useParams();
   const product = products.find((p) => p.id === Number(id));
+
+  useEffect(() => {
+    if (product) document.title = `${product.name} — SOLE.`;
+    return () => { document.title = "SOLE. — Premium Footwear Store"; };
+  }, [product]);
 
   const [imgError, setImgError] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(0);
   const [qty, setQty] = useState(1);
-  const [wished, setWished] = useState(false);
   const [toast, setToast] = useState({ show: false, msg: "" });
   const [activeTab, setActiveTab] = useState("desc");
+  const wished = product ? isWishlisted(product.id) : false;
 
   if (!product) {
     return (
@@ -62,10 +71,10 @@ export default function ProductDetail({ onAddToCart }) {
   const colors = product.colors ?? ["#e63946", "#1a1a1a", "#f8f8f8"];
 
   return (
-    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: "#111", background: "#fff", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: text, background: bg, minHeight: "100vh" }}>
 
       {/* Breadcrumb */}
-      <div style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb", padding: "14px 0" }}>
+      <div style={{ background: bg2, borderBottom: `1px solid ${border}`, padding: "14px 0" }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px", display: "flex", gap: 8, fontSize: ".85rem", color: "#6b7280" }}>
           <Link to="/"     style={{ color: "#6b7280", textDecoration: "none" }}>Home</Link><span>›</span>
           <Link to="/shop" style={{ color: "#6b7280", textDecoration: "none" }}>Shop</Link><span>›</span>
@@ -187,7 +196,7 @@ export default function ProductDetail({ onAddToCart }) {
               </button>
 
               {/* Wishlist */}
-              <button onClick={() => setWished(w => !w)} style={{ width: 52, height: 52, border: `2px solid ${wished ? "#e63946" : "#e5e7eb"}`, borderRadius: 12, background: wished ? "rgba(230,57,70,.08)" : "#fff", fontSize: "1.3rem", cursor: "pointer", transition: "all .2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <button onClick={() => toggleWish(product.id)} style={{ width: 52, height: 52, border: `2px solid ${wished ? "#e63946" : border}`, borderRadius: 12, background: wished ? "rgba(230,57,70,.08)" : card, fontSize: "1.3rem", cursor: "pointer", transition: "all .2s", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {wished ? "❤️" : "🤍"}
               </button>
             </div>

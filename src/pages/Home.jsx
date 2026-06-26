@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { products, categories, testimonials } from "../data/products";
 import ProductCard from "../components/ProductCard";
+import { useTheme } from "../context/ThemeContext";
 
 /* ─── small helpers ─── */
 function useInView(ref) {
@@ -68,6 +69,9 @@ function Stars({ n }) {
    HOME PAGE
 ════════════════════════════════════════════ */
 export default function Home({ onAddToCart, cartCount = 0 }) {
+  const { bg, bg2, card, text, textMuted, border, isDark } = useTheme();
+  useEffect(() => { document.title = "SOLE. — Premium Footwear Store"; }, []);
+
   const [toast, setToast] = useState({ show: false, msg: "" });
   const [email, setEmail] = useState("");
   const [heroShoeIndex, setHeroShoeIndex] = useState(0);
@@ -93,7 +97,7 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
   }
 
   return (
-    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif", color: "#111", background: "#fff" }}>
+    <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif", color: text, background: bg }}>
 
       {/* ══════ HERO ══════ */}
       <section style={{
@@ -220,7 +224,7 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
       </section>
 
       {/* ══════ FEATURED PRODUCTS ══════ */}
-      <section style={{ padding: "80px 0", background: "#f9fafb" }}>
+      <section style={{ padding: "80px 0", background: bg2 }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
           <FadeUp style={{ textAlign: "center", marginBottom: 48 }}>
             <div style={{ display: "inline-block", textTransform: "uppercase", letterSpacing: ".14em", fontSize: ".75rem", fontWeight: 700, color: "#e63946", marginBottom: 10 }}>Handpicked for You</div>
@@ -278,7 +282,7 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
       </section>
 
       {/* ══════ TESTIMONIALS ══════ */}
-      <section style={{ padding: "80px 0", background: "#f9fafb" }}>
+      <section style={{ padding: "80px 0", background: bg2 }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
           <FadeUp style={{ textAlign: "center", marginBottom: 52 }}>
             <div style={{ display: "inline-block", textTransform: "uppercase", letterSpacing: ".14em", fontSize: ".75rem", fontWeight: 700, color: "#e63946", marginBottom: 10 }}>Customer Reviews</div>

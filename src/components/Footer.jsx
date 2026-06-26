@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 const cols = [
   {
@@ -36,8 +37,10 @@ const cols = [
 ];
 
 export default function Footer() {
+  const { isDark } = useTheme();
+  const footerBg = isDark ? "#070b0f" : "#0a0a0a";
   return (
-    <footer style={{ background: "#0a0a0a", color: "rgba(255,255,255,.65)", paddingTop: 72 }}>
+    <footer style={{ background: footerBg, color: "rgba(255,255,255,.65)", paddingTop: 72 }}>
       <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
 
         {/* Top grid */}

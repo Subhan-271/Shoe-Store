@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 function useInView(ref) {
   const [visible, setVisible] = useState(false);
@@ -35,6 +36,9 @@ const faqs = [
 ];
 
 export default function Contact() {
+  const { bg, bg2, card, text, textMuted, border, inputBg, isDark } = useTheme();
+  useEffect(() => { document.title = "Contact — SOLE."; }, []);
+
   const [form, setForm] = useState({ name: "", email: "", subject: "General Inquiry", message: "" });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -60,14 +64,14 @@ export default function Contact() {
 
   const inputStyle = (field) => ({
     width: "100%", padding: "13px 16px",
-    border: `1px solid ${errors[field] ? "#e63946" : "#d1d5db"}`,
+    border: `1px solid ${errors[field] ? "#e63946" : border}`,
     borderRadius: 10, fontSize: ".92rem", outline: "none",
-    background: "#fff", color: "#111", boxSizing: "border-box",
+    background: inputBg, color: text, boxSizing: "border-box",
     transition: "border-color .2s",
   });
 
   return (
-    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: "#111", background: "#fff", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: text, background: bg, minHeight: "100vh" }}>
 
       {/* Banner */}
       <div style={{ background: "#111", padding: "60px 0", textAlign: "center" }}>
@@ -80,12 +84,12 @@ export default function Contact() {
       </div>
 
       {/* Contact Info Cards */}
-      <div style={{ background: "#f9fafb", padding: "56px 0" }}>
+      <div style={{ background: bg2, padding: "56px 0" }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }} className="info-grid">
             {contactInfo.map((item, i) => (
               <FadeUp key={item.title} delay={i * 70}>
-                <div style={{ textAlign: "center", padding: "28px 20px", background: "#fff", border: "1px solid #e5e7eb", borderRadius: 20, transition: "all .28s" }}
+                <div style={{ textAlign: "center", padding: "28px 20px", background: card, border: `1px solid ${border}`, borderRadius: 20, transition: "all .28s" }}
                   onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.09)"; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
                   <div style={{ width: 56, height: 56, background: "rgba(230,57,70,.1)", borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", margin: "0 auto 16px" }}>{item.icon}</div>
@@ -106,7 +110,7 @@ export default function Contact() {
 
           {/* Form */}
           <FadeUp>
-            <div style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 24, padding: 40, boxShadow: "0 4px 20px rgba(0,0,0,.06)" }}>
+            <div style={{ background: card, border: `1px solid ${border}`, borderRadius: 24, padding: 40, boxShadow: isDark ? "0 4px 20px rgba(0,0,0,.3)" : "0 4px 20px rgba(0,0,0,.06)" }}>
               {submitted ? (
                 <div style={{ textAlign: "center", padding: "40px 0" }}>
                   <div style={{ fontSize: "4rem", marginBottom: 16 }}>🎉</div>
@@ -185,7 +189,7 @@ export default function Contact() {
 
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 {faqs.map((faq, i) => (
-                  <div key={i} style={{ border: "1px solid #e5e7eb", borderRadius: 14, overflow: "hidden", transition: "box-shadow .2s" }}
+                  <div key={i} style={{ border: `1px solid ${border}`, borderRadius: 14, overflow: "hidden", background: card, transition: "box-shadow .2s" }}
                     onMouseEnter={e => e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,.07)"}
                     onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
                     <button onClick={() => setOpenFaq(openFaq === i ? null : i)}

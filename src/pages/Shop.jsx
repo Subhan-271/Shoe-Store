@@ -1,9 +1,13 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { products, categories } from "../data/products";
 import ProductCard from "../components/ProductCard";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Shop({ onAddToCart }) {
+  const { bg, bg2, card, text, textMuted, border, inputBg, isDark } = useTheme();
+  useEffect(() => { document.title = "Shop — SOLE."; }, []);
+
   const [searchParams] = useSearchParams();
   const urlCat = searchParams.get("cat");
   const urlQ   = searchParams.get("q") || "";
@@ -55,7 +59,7 @@ export default function Shop({ onAddToCart }) {
   }, [selectedCats, maxPrice, onlySale, sort, search]);
 
   return (
-    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: "#111", background: "#fff", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: text, background: bg, minHeight: "100vh" }}>
 
       {/* Banner */}
       <div style={{ background: "#111", padding: "52px 0", textAlign: "center" }}>
@@ -82,7 +86,7 @@ export default function Shop({ onAddToCart }) {
         </button>
 
         {/* ── Sidebar ── */}
-        <aside className={`shop-sidebar ${filtersOpen ? "sidebar-open" : ""}`} style={{ background: "#fff", border: "1px solid #e5e7eb", borderRadius: 16, padding: 24, position: "sticky", top: 96 }}>
+        <aside className={`shop-sidebar ${filtersOpen ? "sidebar-open" : ""}`} style={{ background: card, border: `1px solid ${border}`, borderRadius: 16, padding: 24, position: "sticky", top: 96 }}>
 
           {/* Search */}
           <div style={{ marginBottom: 24 }}>
@@ -90,7 +94,7 @@ export default function Shop({ onAddToCart }) {
             <input
               type="text" placeholder="Search shoes..." value={search}
               onChange={(e) => setSearch(e.target.value)}
-              style={{ width: "100%", padding: "10px 12px", border: "1px solid #d1d5db", borderRadius: 8, fontSize: ".9rem", outline: "none", boxSizing: "border-box" }}
+              style={{ width: "100%", padding: "10px 12px", border: `1px solid ${border}`, borderRadius: 8, fontSize: ".9rem", outline: "none", boxSizing: "border-box", background: inputBg, color: text }}
             />
           </div>
 

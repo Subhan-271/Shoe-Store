@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 function useInView(ref) {
   const [visible, setVisible] = useState(false);
@@ -36,8 +37,10 @@ const values = [
 ];
 
 export default function About() {
+  const { bg, bg2, card, text, textMuted, border } = useTheme();
+  useEffect(() => { document.title = "About — SOLE."; }, []);
   return (
-    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: "#111", background: "#fff", minHeight: "100vh" }}>
+    <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: text, background: bg, minHeight: "100vh" }}>
 
       {/* Banner */}
       <div style={{ background: "#111", padding: "60px 0", textAlign: "center" }}>
@@ -67,10 +70,10 @@ export default function About() {
           <FadeUp delay={120}>
             <span style={{ display: "inline-block", textTransform: "uppercase", letterSpacing: ".14em", fontSize: ".75rem", fontWeight: 700, color: "#e63946", marginBottom: 12 }}>Who We Are</span>
             <h2 style={{ fontSize: "clamp(1.6rem,3vw,2.4rem)", fontWeight: 900, marginBottom: 20 }}>We Believe Every Step <span style={{ color: "#e63946", fontStyle: "italic" }}>Matters</span></h2>
-            <p style={{ color: "#4b5563", lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
+            <p style={{ color: textMuted, lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
               SOLE was born in 2019 from a simple frustration — finding quality shoes online shouldn't feel like a gamble. Our founder Alex Rivera, after years in the footwear industry, set out to build a store that puts authenticity, quality, and customer experience first.
             </p>
-            <p style={{ color: "#4b5563", lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
+            <p style={{ color: textMuted, lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
               What started as a small operation in a San Francisco apartment is now one of the fastest-growing premium footwear destinations, serving over 50,000 customers across the country.
             </p>
             <p style={{ color: "#4b5563", lineHeight: 1.8, fontSize: ".98rem" }}>
@@ -88,7 +91,7 @@ export default function About() {
       </section>
 
       {/* Stats */}
-      <section style={{ background: "#f9fafb", padding: "72px 0" }}>
+      <section style={{ background: bg2, padding: "72px 0" }}>
         <div style={{ maxWidth: 1260, margin: "0 auto", padding: "0 24px" }}>
           <FadeUp>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 24 }} className="stats-grid">
@@ -98,7 +101,7 @@ export default function About() {
                 ["99%",   "Satisfaction Rate"],
                 ["2-Day", "Avg. Delivery"],
               ].map(([num, lbl], i) => (
-                <div key={lbl} style={{ textAlign: "center", padding: "40px 20px", background: "#fff", border: "1px solid #e5e7eb", borderRadius: 20, transition: "all .28s" }}
+                <div key={lbl} style={{ textAlign: "center", padding: "40px 20px", background: card, border: `1px solid ${border}`, borderRadius: 20, transition: "all .28s" }}
                   onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,.1)"; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
                   <div style={{ fontSize: "2.6rem", fontWeight: 900, color: "#e63946", marginBottom: 8 }}>{num}</div>
