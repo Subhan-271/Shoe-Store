@@ -355,7 +355,7 @@ export default function Home({ onAddToCart, cartCount = 0 }) {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               {[
                 { icon: "✉️", label: "hello@sole.store" },
-                { icon: "📞", label: "+1 (555) 123-4567" },
+                { icon: "📞", label: "+92 51 1234567" },
                 { icon: "⚡", label: "Live chat — avg. reply < 2 min" },
               ].map(({ icon, label }) => (
                 <div key={label} style={{ display: "flex", alignItems: "center", gap: 12 }}>

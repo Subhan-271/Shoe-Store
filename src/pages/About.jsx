@@ -61,7 +61,7 @@ export default function About() {
               <span style={{ fontSize: "7rem", filter: "drop-shadow(0 12px 24px rgba(230,57,70,.4))", animation: "float 4s ease-in-out infinite" }}>👟</span>
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#fff" }}>Founded in 2019</div>
-                <div style={{ fontSize: ".85rem", color: "rgba(255,255,255,.5)" }}>San Francisco, CA</div>
+                <div style={{ fontSize: ".85rem", color: "rgba(255,255,255,.5)" }}>Islamabad, Pakistan</div>
               </div>
             </div>
           </FadeUp>
@@ -71,10 +71,10 @@ export default function About() {
             <span style={{ display: "inline-block", textTransform: "uppercase", letterSpacing: ".14em", fontSize: ".75rem", fontWeight: 700, color: "#e63946", marginBottom: 12 }}>Who We Are</span>
             <h2 style={{ fontSize: "clamp(1.6rem,3vw,2.4rem)", fontWeight: 900, marginBottom: 20 }}>We Believe Every Step <span style={{ color: "#e63946", fontStyle: "italic" }}>Matters</span></h2>
             <p style={{ color: textMuted, lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
-              SOLE was born in 2019 from a simple frustration — finding quality shoes online shouldn't feel like a gamble. Our founder Alex Rivera, after years in the footwear industry, set out to build a store that puts authenticity, quality, and customer experience first.
+              SOLE was born in 2019 from a simple frustration — finding quality shoes online shouldn't feel like a gamble. Our founder Ali Hassan, after years in the footwear industry, set out to build a store that puts authenticity, quality, and customer experience first.
             </p>
             <p style={{ color: textMuted, lineHeight: 1.8, marginBottom: 16, fontSize: ".98rem" }}>
-              What started as a small operation in a San Francisco apartment is now one of the fastest-growing premium footwear destinations, serving over 50,000 customers across the country.
+              What started as a small operation in an Islamabad office is now one of Pakistan's fastest-growing premium footwear destinations, serving over 50,000 customers across the country.
             </p>
             <p style={{ color: "#4b5563", lineHeight: 1.8, fontSize: ".98rem" }}>
               From running shoes engineered for marathons to limited-edition street drops, we curate only the best — so you can focus on the journey, not the gear.

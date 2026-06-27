@@ -16,22 +16,22 @@ const cols = [
   {
     title: "Help",
     links: [
-      ["Size Guide",      "#"],
-      ["Shipping Info",   "#"],
-      ["Returns",         "#"],
-      ["Order Tracking",  "#"],
+      ["Size Guide",      "/size-guide"],
+      ["Shipping Info",   "/shipping"],
+      ["Returns",         "/returns"],
+      ["Order Tracking",  "/order-tracking"],
       ["Contact Us",      "/contact"],
-      ["FAQ",             "#"],
+      ["FAQ",             "/faq"],
     ],
   },
   {
     title: "Company",
     links: [
       ["About SOLE",     "/about"],
-      ["Careers",        "#"],
-      ["Press Room",     "#"],
-      ["Sustainability", "#"],
-      ["Gift Cards",     "#"],
+      ["Careers",        "/careers"],
+      ["Press Room",     "/press"],
+      ["Sustainability", "/sustainability"],
+      ["Gift Cards",     "/gift-cards"],
     ],
   },
 ];

@@ -22,8 +22,8 @@ function FadeUp({ children, delay = 0 }) {
 }
 
 const contactInfo = [
-  { icon: "📍", title: "Visit Us",       lines: ["123 Sole Street, Suite 200", "San Francisco, CA 94102"] },
-  { icon: "📞", title: "Call Us",        lines: ["+1 (555) 123-4567", "Mon–Fri, 9am – 6pm PST"] },
+  { icon: "📍", title: "Visit Us",       lines: ["Blue Area, Jinnah Avenue", "Islamabad, Pakistan 44000"] },
+  { icon: "📞", title: "Call Us",        lines: ["+92 51 1234567", "Mon–Sat, 9am – 6pm PKT"] },
   { icon: "✉️", title: "Email Us",       lines: ["hello@sole.store", "support@sole.store"] },
   { icon: "⚡", title: "Live Chat",      lines: ["Available 24/7", "Avg. response < 2 min"] },
 ];
@@ -210,8 +210,8 @@ export default function Contact() {
               <div style={{ marginTop: 40, height: 200, background: "linear-gradient(135deg, #111 0%, #2d2d2d 100%)", borderRadius: 20, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: 12 }}>
                 <span style={{ fontSize: "2.5rem" }}>📍</span>
                 <div style={{ textAlign: "center" }}>
-                  <div style={{ color: "#fff", fontWeight: 700 }}>123 Sole Street, San Francisco</div>
-                  <div style={{ color: "rgba(255,255,255,.5)", fontSize: ".85rem" }}>Mon–Sat 9am–7pm · Sun 11am–5pm</div>
+                  <div style={{ color: "#fff", fontWeight: 700 }}>Blue Area, Jinnah Avenue, Islamabad</div>
+                  <div style={{ color: "rgba(255,255,255,.5)", fontSize: ".85rem" }}>Mon–Sat 10am–8pm · Sun 12pm–6pm</div>
                 </div>
               </div>
             </div>

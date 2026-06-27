@@ -41,7 +41,7 @@ export default function Shop({ onAddToCart }) {
 
   function reset() {
     setSelectedCats([]);
-    setMaxPrice(350);
+    setMaxPrice(100000);
     setOnlySale(false);
     setSort("default");
     setSearch("");
@@ -69,7 +69,7 @@ export default function Shop({ onAddToCart }) {
     if (sort === "rating")     list.sort((a, b) => b.rating - a.rating);
     if (sort === "newest")     list.sort((a, b) => b.id - a.id);
     return list;
-  }, [selectedCats, maxPrice, onlySale, sort, search]);
+  }, [products, selectedCats, maxPrice, onlySale, sort, search]);
 
   return (
     <div style={{ fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif", color: text, background: bg, minHeight: "100vh" }}>

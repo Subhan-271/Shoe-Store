@@ -12,6 +12,15 @@ import Contact from "./pages/Contact";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import SizeGuide from "./pages/SizeGuide";
+import ShippingInfo from "./pages/ShippingInfo";
+import Returns from "./pages/Returns";
+import OrderTracking from "./pages/OrderTracking";
+import FAQ from "./pages/FAQ";
+import Careers from "./pages/Careers";
+import PressRoom from "./pages/PressRoom";
+import Sustainability from "./pages/Sustainability";
+import GiftCards from "./pages/GiftCards";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -55,6 +64,15 @@ function App() {
               <Route path="/cart"        element={<CartPage cart={cart} onRemove={handleRemove} onUpdateQty={handleUpdateQty} />} />
               <Route path="/wishlist"    element={<WishlistPage onAddToCart={handleAddToCart} />} />
               <Route path="/checkout"    element={<CheckoutPage cart={cart} onClearCart={handleClearCart} />} />
+              <Route path="/size-guide"     element={<SizeGuide />} />
+              <Route path="/shipping"       element={<ShippingInfo />} />
+              <Route path="/returns"        element={<Returns />} />
+              <Route path="/order-tracking" element={<OrderTracking />} />
+              <Route path="/faq"            element={<FAQ />} />
+              <Route path="/careers"        element={<Careers />} />
+              <Route path="/press"          element={<PressRoom />} />
+              <Route path="/sustainability"  element={<Sustainability />} />
+              <Route path="/gift-cards"     element={<GiftCards />} />
             </Routes>
             <Footer />
           </div>
