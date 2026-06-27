@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { fetchProduct, fetchProducts } from "../api";
 import ProductCard from "../components/ProductCard";
+import { pkr } from "../utils/currency";
 import ShoeIllustration from "../components/ShoeIllustration";
 import { useTheme } from "../context/ThemeContext";
 import { useWishlist } from "../context/WishlistContext";
@@ -156,10 +157,10 @@ export default function ProductDetail({ onAddToCart }) {
 
             {/* Price */}
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24, paddingBottom: 24, borderBottom: "1px solid #e5e7eb" }}>
-              <span style={{ fontSize: "2.2rem", fontWeight: 900 }}>${product.price.toFixed(2)}</span>
+              <span style={{ fontSize: "2.2rem", fontWeight: 900 }}>{pkr(product.price)}</span>
               {product.originalPrice > product.price && (
                 <>
-                  <span style={{ fontSize: "1.1rem", color: "#9ca3af", textDecoration: "line-through" }}>${product.originalPrice.toFixed(2)}</span>
+                  <span style={{ fontSize: "1.1rem", color: "#9ca3af", textDecoration: "line-through" }}>{pkr(product.originalPrice)}</span>
                   <span style={{ background: "#10b981", color: "#fff", padding: "4px 12px", borderRadius: 100, fontSize: ".8rem", fontWeight: 700 }}>-{discount}%</span>
                 </>
               )}

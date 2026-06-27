@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import ShoeIllustration from "./ShoeIllustration";
 import { useWishlist } from "../context/WishlistContext";
 import { useTheme } from "../context/ThemeContext";
+import { pkr } from "../utils/currency";
 
 function Stars({ rating }) {
   return (
@@ -99,10 +100,10 @@ export default function ProductCard({ product, onAddToCart, index = 0 }) {
           <span style={{ fontSize: ".75rem", color: textMuted }}>({product.reviews})</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: 2 }}>
-          <span style={{ fontSize: "1.1rem", fontWeight: 800, color: text }}>${product.price.toFixed(2)}</span>
+          <span style={{ fontSize: "1.1rem", fontWeight: 800, color: text }}>{pkr(product.price)}</span>
           {product.originalPrice > product.price && (
             <span style={{ fontSize: ".85rem", color: textMuted, textDecoration: "line-through" }}>
-              ${product.originalPrice.toFixed(2)}
+              {pkr(product.originalPrice)}
             </span>
           )}
         </div>

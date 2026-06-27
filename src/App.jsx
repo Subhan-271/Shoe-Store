@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -33,6 +34,10 @@ function App() {
     setCart((prev) => prev.map((i) => i.key === key ? { ...i, qty } : i));
   }
 
+  function handleClearCart() {
+    setCart([]);
+  }
+
   const cartCount = cart.reduce((s, i) => s + i.qty, 0);
 
   return (
@@ -49,6 +54,7 @@ function App() {
               <Route path="/contact"     element={<Contact />} />
               <Route path="/cart"        element={<CartPage cart={cart} onRemove={handleRemove} onUpdateQty={handleUpdateQty} />} />
               <Route path="/wishlist"    element={<WishlistPage onAddToCart={handleAddToCart} />} />
+              <Route path="/checkout"    element={<CheckoutPage cart={cart} onClearCart={handleClearCart} />} />
             </Routes>
             <Footer />
           </div>

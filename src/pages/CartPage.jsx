@@ -1,14 +1,16 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { pkr } from "../utils/currency";
 
 export default function CartPage({ cart, onRemove, onUpdateQty }) {
   const { bg, bg2, card, text, textMuted, border, isDark } = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => { document.title = "Cart — SOLE."; }, []);
 
   const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const shipping = subtotal >= 75 ? 0 : 9.99;
+  const shipping = subtotal >= 21000 ? 0 : 299;
   const total    = subtotal + shipping;
 
   if (cart.length === 0) return (
@@ -82,7 +84,7 @@ export default function CartPage({ cart, onRemove, onUpdateQty }) {
               {/* Price + Remove */}
               <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <div style={{ fontWeight: 800, fontSize: "1.1rem", color: text, marginBottom: 8 }}>
-                  ${(item.price * item.qty).toFixed(2)}
+                  {pkr(item.price * item.qty)}
                 </div>
                 <button onClick={() => onRemove(item.key)}
                   style={{ background: "none", border: "none", cursor: "pointer", color: "#e63946", fontSize: ".82rem", fontWeight: 600, padding: 0, transition: "opacity .15s" }}
@@ -106,17 +108,17 @@ export default function CartPage({ cart, onRemove, onUpdateQty }) {
           <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 20 }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".92rem", color: textMuted }}>
               <span>Subtotal ({cart.reduce((s,i)=>s+i.qty,0)} items)</span>
-              <span style={{ color: text, fontWeight: 600 }}>${subtotal.toFixed(2)}</span>
+              <span style={{ color: text, fontWeight: 600 }}>{pkr(subtotal)}</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".92rem", color: textMuted }}>
               <span>Shipping</span>
               <span style={{ color: shipping === 0 ? "#10b981" : text, fontWeight: 600 }}>
-                {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                {shipping === 0 ? "FREE" : pkr(shipping)}
               </span>
             </div>
             {shipping > 0 && (
               <div style={{ background: "rgba(230,57,70,.07)", border: "1px solid rgba(230,57,70,.15)", borderRadius: 8, padding: "8px 12px", fontSize: ".78rem", color: "#e63946" }}>
-                Add <strong>${(75 - subtotal).toFixed(2)}</strong> more for free shipping!
+                Add <strong>{pkr(21000 - subtotal)}</strong> more for free shipping!
               </div>
             )}
           </div>
@@ -124,11 +126,12 @@ export default function CartPage({ cart, onRemove, onUpdateQty }) {
           <div style={{ borderTop: `1px solid ${border}`, paddingTop: 16, marginBottom: 24 }}>
             <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 800, fontSize: "1.15rem", color: text }}>
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>{pkr(total)}</span>
             </div>
           </div>
 
-          <button style={{ width: "100%", padding: "15px", background: "#e63946", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: "1rem", cursor: "pointer", marginBottom: 12, transition: "background .2s" }}
+          <button onClick={() => navigate("/checkout")}
+            style={{ width: "100%", padding: "15px", background: "#e63946", color: "#fff", border: "none", borderRadius: 12, fontWeight: 700, fontSize: "1rem", cursor: "pointer", marginBottom: 12, transition: "background .2s" }}
             onMouseEnter={e => e.currentTarget.style.background = "#b91c2c"}
             onMouseLeave={e => e.currentTarget.style.background = "#e63946"}>
             Checkout →

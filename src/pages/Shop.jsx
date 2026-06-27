@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { fetchProducts, fetchCategories } from "../api";
 import ProductCard from "../components/ProductCard";
 import { useTheme } from "../context/ThemeContext";
+import { pkr } from "../utils/currency";
 
 export default function Shop({ onAddToCart }) {
   const { bg, bg2, card, text, textMuted, border, inputBg, isDark } = useTheme();
@@ -25,7 +26,7 @@ export default function Shop({ onAddToCart }) {
   }, []);
 
   const [selectedCats, setSelectedCats] = useState(urlCat ? [urlCat] : []);
-  const [maxPrice, setMaxPrice] = useState(350);
+  const [maxPrice, setMaxPrice] = useState(100000);
   const [onlySale, setOnlySale] = useState(false);
   const [sort, setSort] = useState("default");
   const [search, setSearch] = useState(urlQ);
@@ -127,11 +128,11 @@ export default function Shop({ onAddToCart }) {
           {/* Price */}
           <div style={{ marginBottom: 24 }}>
             <div style={{ fontSize: ".8rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: ".06em", color: "#374151", marginBottom: 12, paddingBottom: 8, borderBottom: "1px solid #e5e7eb" }}>Max Price</div>
-            <input type="range" min={0} max={350} step={10} value={maxPrice}
+            <input type="range" min={0} max={100000} step={1000} value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               style={{ width: "100%", accentColor: "#e63946", cursor: "pointer" }} />
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: ".82rem", color: "#6b7280", marginTop: 6 }}>
-              <span>$0</span><span style={{ fontWeight: 700, color: "#e63946" }}>Up to ${maxPrice}</span>
+              <span>Rs. 0</span><span style={{ fontWeight: 700, color: "#e63946" }}>Up to {pkr(maxPrice)}</span>
             </div>
           </div>
 
