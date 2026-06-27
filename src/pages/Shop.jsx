@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { products, categories } from "../data/products";
+import { fetchProducts, fetchCategories } from "../api";
 import ProductCard from "../components/ProductCard";
 import { useTheme } from "../context/ThemeContext";
 
@@ -11,6 +11,18 @@ export default function Shop({ onAddToCart }) {
   const [searchParams] = useSearchParams();
   const urlCat = searchParams.get("cat");
   const urlQ   = searchParams.get("q") || "";
+
+  const [products, setProducts]     = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading]       = useState(true);
+  const [apiError, setApiError]     = useState(false);
+
+  useEffect(() => {
+    Promise.all([fetchProducts(), fetchCategories()])
+      .then(([prods, cats]) => { setProducts(prods); setCategories(cats); })
+      .catch(() => setApiError(true))
+      .finally(() => setLoading(false));
+  }, []);
 
   const [selectedCats, setSelectedCats] = useState(urlCat ? [urlCat] : []);
   const [maxPrice, setMaxPrice] = useState(350);
@@ -159,7 +171,30 @@ export default function Shop({ onAddToCart }) {
           </div>
 
           {/* Grid */}
-          {filtered.length === 0 ? (
+          {loading ? (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }} className="prod-grid-shop">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} style={{ borderRadius: 16, overflow: "hidden", background: card, border: `1px solid ${border}` }}>
+                  <div className="skeleton" style={{ height: 220 }} />
+                  <div style={{ padding: 16 }}>
+                    <div className="skeleton" style={{ height: 16, borderRadius: 8, marginBottom: 10, width: "60%" }} />
+                    <div className="skeleton" style={{ height: 22, borderRadius: 8, marginBottom: 8 }} />
+                    <div className="skeleton" style={{ height: 14, borderRadius: 8, width: "40%" }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : apiError ? (
+            <div style={{ textAlign: "center", padding: "80px 20px", color: "#6b7280" }}>
+              <div style={{ fontSize: "3.5rem", marginBottom: 16 }}>⚠️</div>
+              <h3 style={{ marginBottom: 8 }}>Could not load products</h3>
+              <p>Make sure the backend server is running on port 5000.</p>
+              <button onClick={() => { setApiError(false); setLoading(true); Promise.all([fetchProducts(), fetchCategories()]).then(([p,c])=>{setProducts(p);setCategories(c);}).catch(()=>setApiError(true)).finally(()=>setLoading(false)); }}
+                style={{ marginTop: 16, padding: "10px 24px", background: "#e63946", color: "#fff", border: "none", borderRadius: 8, fontWeight: 600, cursor: "pointer" }}>
+                Retry
+              </button>
+            </div>
+          ) : filtered.length === 0 ? (
             <div style={{ textAlign: "center", padding: "80px 20px", color: "#6b7280" }}>
               <div style={{ fontSize: "3.5rem", marginBottom: 16 }}>🔍</div>
               <h3 style={{ marginBottom: 8 }}>No shoes found</h3>

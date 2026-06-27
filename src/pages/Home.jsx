@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { products, categories, testimonials } from "../data/products";
+import { categories, testimonials } from "../data/products";
+import { fetchProducts } from "../api";
 import ProductCard from "../components/ProductCard";
 import { useTheme } from "../context/ThemeContext";
 
@@ -71,6 +72,9 @@ function Stars({ n }) {
 export default function Home({ onAddToCart, cartCount = 0 }) {
   const { bg, bg2, card, text, textMuted, border, isDark } = useTheme();
   useEffect(() => { document.title = "SOLE. — Premium Footwear Store"; }, []);
+
+  const [products, setProducts] = useState([]);
+  useEffect(() => { fetchProducts().then(setProducts).catch(() => {}); }, []);
 
   const [toast, setToast] = useState({ show: false, msg: "" });
   const [email, setEmail] = useState("");

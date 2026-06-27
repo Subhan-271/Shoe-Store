@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { products } from "../data/products";
+import { fetchProduct, fetchProducts } from "../api";
 import ProductCard from "../components/ProductCard";
 import ShoeIllustration from "../components/ShoeIllustration";
 import { useTheme } from "../context/ThemeContext";
@@ -20,12 +20,26 @@ export default function ProductDetail({ onAddToCart }) {
   const { bg, bg2, card, text, textMuted, border, inputBg, isDark } = useTheme();
   const { toggle: toggleWish, isWishlisted } = useWishlist();
   const { id } = useParams();
-  const product = products.find((p) => p.id === Number(id));
+
+  const [product, setProduct] = useState(null);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (product) document.title = `${product.name} — SOLE.`;
+    setLoading(true);
+    setNotFound(false);
+    fetchProduct(id)
+      .then((p) => {
+        setProduct(p);
+        document.title = `${p.name} — SOLE.`;
+        return fetchProducts({ category: p.category });
+      })
+      .then((all) => setRelated(all.filter((p) => p.id !== Number(id)).slice(0, 4)))
+      .catch(() => setNotFound(true))
+      .finally(() => setLoading(false));
     return () => { document.title = "SOLE. — Premium Footwear Store"; };
-  }, [product]);
+  }, [id]);
 
   const [imgError, setImgError] = useState(false);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -35,7 +49,22 @@ export default function ProductDetail({ onAddToCart }) {
   const [activeTab, setActiveTab] = useState("desc");
   const wished = product ? isWishlisted(product.id) : false;
 
-  if (!product) {
+  if (loading) {
+    return (
+      <div style={{ maxWidth: 1260, margin: "0 auto", padding: "52px 24px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64 }} className="detail-grid">
+        <div className="skeleton" style={{ height: 460, borderRadius: 24 }} />
+        <div>
+          <div className="skeleton" style={{ height: 14, width: "30%", borderRadius: 8, marginBottom: 12 }} />
+          <div className="skeleton" style={{ height: 36, borderRadius: 8, marginBottom: 16 }} />
+          <div className="skeleton" style={{ height: 20, width: "50%", borderRadius: 8, marginBottom: 24 }} />
+          <div className="skeleton" style={{ height: 48, borderRadius: 8, marginBottom: 24 }} />
+          <div className="skeleton" style={{ height: 120, borderRadius: 8 }} />
+        </div>
+      </div>
+    );
+  }
+
+  if (notFound || !product) {
     return (
       <div style={{ textAlign: "center", padding: "120px 24px", fontFamily: "system-ui,sans-serif" }}>
         <div style={{ fontSize: "4rem", marginBottom: 16 }}>😕</div>
@@ -47,8 +76,6 @@ export default function ProductDetail({ onAddToCart }) {
 
   const discount = product.originalPrice > product.price
     ? Math.round((1 - product.price / product.originalPrice) * 100) : 0;
-
-  const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   function addToCart() {
     if (!selectedSize) {
