@@ -22,7 +22,7 @@ INSERT INTO products
 VALUES
 
 -- 1. CloudRunner X Pro
-('CloudRunner X Pro', 'running', 149.99, 199.99, 4.8, 234,
+('CloudRunner X Pro', 'running', 41999, 53999, 4.8, 234,
  'New Arrival',
  'linear-gradient(135deg, #e63946 0%, #9b1c2a 100%)',
  '/images/shoes/cloudrunner-x-pro.jpg',
@@ -34,7 +34,7 @@ VALUES
  '["#e63946","#1a1a1a","#f8f9fa"]'),
 
 -- 2. Urban Glide Classic
-('Urban Glide Classic', 'casual', 89.99, 89.99, 4.5, 187,
+('Urban Glide Classic', 'casual', 24999, 24999, 4.5, 187,
  NULL,
  'linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%)',
  '/images/shoes/daniel-storek-JM-qKEd1GMI-unsplash.jpg',
@@ -46,7 +46,7 @@ VALUES
  '["#2563eb","#d4a017","#e8e8e8"]'),
 
 -- 3. TrailBlaze Summit
-('TrailBlaze Summit', 'hiking', 179.99, 229.99, 4.7, 156,
+('TrailBlaze Summit', 'hiking', 49999, 63999, 4.7, 156,
  'Sale',
  'linear-gradient(135deg, #059669 0%, #064e3b 100%)',
  '/images/shoes/raul-de-los-santos-6tpdFZtbj0E-unsplash.jpg',
@@ -58,7 +58,7 @@ VALUES
  '["#059669","#92400e","#1f2937"]'),
 
 -- 4. Court King Elite
-('Court King Elite', 'basketball', 159.99, 200.00, 4.6, 203,
+('Court King Elite', 'basketball', 44999, 55999, 4.6, 203,
  'Best Seller',
  'linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 100%)',
  '/images/shoes/ox-street-BWPqHZBhMVA-unsplash.jpg',
@@ -70,7 +70,7 @@ VALUES
  '["#1a1a1a","#e63946","#f59e0b"]'),
 
 -- 5. Speed Demon Ultra
-('Speed Demon Ultra', 'running', 219.99, 279.99, 4.9, 312,
+('Speed Demon Ultra', 'running', 61999, 77999, 4.9, 312,
  'Top Pick',
  'linear-gradient(135deg, #7c3aed 0%, #3b0764 100%)',
  '/images/shoes/archer-allstars-D_0iYotrcUk-unsplash.jpg',
@@ -82,7 +82,7 @@ VALUES
  '["#7c3aed","#ec4899","#000000"]'),
 
 -- 6. Street Wave
-('Street Wave', 'casual', 69.99, 99.99, 4.2, 98,
+('Street Wave', 'casual', 19999, 27999, 4.2, 98,
  'Sale',
  'linear-gradient(135deg, #d97706 0%, #78350f 100%)',
  '/images/shoes/maria-fernanda-pissioli-i8OruGmFXtw-unsplash.jpg',
@@ -94,7 +94,7 @@ VALUES
  '["#d97706","#1a1a1a","#6b7280"]'),
 
 -- 7. Summit X3 Boot
-('Summit X3 Boot', 'hiking', 199.99, 199.99, 4.8, 89,
+('Summit X3 Boot', 'hiking', 55999, 55999, 4.8, 89,
  'New Arrival',
  'linear-gradient(135deg, #92400e 0%, #451a03 100%)',
  NULL,
@@ -106,7 +106,7 @@ VALUES
  '["#92400e","#1a1a1a","#374151"]'),
 
 -- 8. NightGlow Limited
-('NightGlow Limited', 'limited', 299.99, 349.99, 5.0, 28,
+('NightGlow Limited', 'limited', 83999, 97999, 5.0, 28,
  'Limited',
  'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #7c3aed 100%)',
  '/images/shoes/irene-kredenets-dwKiHoqqxk8-unsplash.jpg',
@@ -118,7 +118,7 @@ VALUES
  '["#0f172a","#7c3aed"]'),
 
 -- 9. Velocity Runner
-('Velocity Runner', 'running', 99.99, 129.99, 4.3, 167,
+('Velocity Runner', 'running', 27999, 36999, 4.3, 167,
  'Sale',
  'linear-gradient(135deg, #db2777 0%, #701a75 100%)',
  '/images/shoes/mana-akbarzadegan-kLnlaZJ4SMA-unsplash.jpg',
@@ -130,7 +130,7 @@ VALUES
  '["#db2777","#7c3aed","#374151"]'),
 
 -- 10. Drift Casual Plus
-('Drift Casual Plus', 'casual', 79.99, 79.99, 4.1, 76,
+('Drift Casual Plus', 'casual', 22999, 22999, 4.1, 76,
  NULL,
  'linear-gradient(135deg, #4f46e5 0%, #1e1b4b 100%)',
  '/images/shoes/nadya-nada-YMU2RNYjL0M-unsplash.jpg',
@@ -142,7 +142,7 @@ VALUES
  '["#4f46e5","#0891b2","#6b7280"]'),
 
 -- 11. Apex Oxford
-('Apex Oxford', 'formal', 169.99, 219.99, 4.6, 54,
+('Apex Oxford', 'formal', 47999, 61999, 4.6, 54,
  'Sale',
  'linear-gradient(135deg, #292524 0%, #0c0a09 100%)',
  '/images/shoes/the-dk-photography-7Uwh8QXYdXQ-unsplash.jpg',
@@ -154,7 +154,7 @@ VALUES
  '["#292524","#7f1d1d","#d4a017"]'),
 
 -- 12. Slam Dunk Pro
-('Slam Dunk Pro', 'basketball', 139.99, 169.99, 4.4, 145,
+('Slam Dunk Pro', 'basketball', 38999, 47999, 4.4, 145,
  NULL,
  'linear-gradient(135deg, #0891b2 0%, #0c4a6e 100%)',
  '/images/shoes/peri-stojnic-r3rbIwZ9DJc-unsplash.jpg',
